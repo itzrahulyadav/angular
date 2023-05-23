@@ -8,6 +8,8 @@ phases:
       - npm install
   pre_build:
     commands:
+      - npm install sonar-scanner --save-dev
+      - npx sonar-scanner
       - ls
-      - docker run  --rm -v "$(pwd)":/usr/src/app -v sonarqube_cache:/root/.sonar/cache --network=host sonarsource/sonar-scanner-cli:latest -Dsonar.projectKey=angular-project -Dsonar.sources=. -Dsonar.host.url=http://13.232.66.119:9000 -Dsonar.token=sqp_56c3edda5bb4b36751f707f3d84b647d3c36e7a2
+     # - docker run  --rm -v "$(pwd)":/usr/src/app -v sonarqube_cache:/root/.sonar/cache --network=host sonarsource/sonar-scanner-cli:latest -Dsonar.projectKey=angular-project -Dsonar.sources=. -Dsonar.host.url=http://13.232.66.119:9000 -Dsonar.token=sqp_56c3edda5bb4b36751f707f3d84b647d3c36e7a2
 
