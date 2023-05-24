@@ -11,6 +11,7 @@ phases:
  #     - npm install sonar-scanner --save-dev
       - npm i sonar-scanner --save-dev
       - npm run sonar-scanner
+      - docker run  --rm  -e SONAR_HOST_URL="http://3.110.223.9:9000"  -e SONAR_SCANNER_OPTS="-Dsonar.projectKey=test-project"  -e SONAR_TOKEN="sqp_972e763b1c0e03f1f976ce057a8a80c64df93bb8"  -v "./:/usr/src" sonarsource/sonar-scanner-cli
     #   - npx sonar-scanner
     #   - codebuild-breakpoint
     #   - ls
