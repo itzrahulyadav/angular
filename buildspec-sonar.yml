@@ -9,8 +9,8 @@ phases:
   pre_build:
     commands:
  #     - npm install sonar-scanner --save-dev
-      - npm install -D sonarqube-scanner
-      - npx sonarqube-scanner
+      - npm i sonar-scanner --save-dev
+      - npm run sonar-scanner
     #   - npx sonar-scanner
     #   - codebuild-breakpoint
     #   - ls
