@@ -1,11 +1,12 @@
-FROM node:14.15-alpine as build-step
+FROM node:18.10-alpine as build-step
 RUN mkdir -p /app
 WORKDIR /app
 COPY package.json /app
 RUN npm install
 COPY . /app
 RUN npm run build
+RUN ls
 
 FROM nginx:alpine
-COPY --from=build-step /app/dist /usr/share/nginx/html/main/
-RUN cd /usr/share/nginx/html/main/ && ls -ltR
+COPY --from=build-step /app/dist/* /usr/share/nginx/html
+RUN ls -ltR /usr/share/nginx/html
