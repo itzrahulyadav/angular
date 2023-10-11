@@ -7,6 +7,9 @@ COPY . /app
 RUN npm run build
 RUN ls
 
+FROM alpine
+RUN apk update
+
 FROM nginx:alpine
 COPY --from=build-step /app/dist/* /usr/share/nginx/html
 RUN ls -ltR /usr/share/nginx/html

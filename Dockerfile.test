@@ -1,0 +1,40 @@
+FROM public.ecr.aws/docker/library/node:16.20-alpine as build-step
+
+#FROM node:16.20-alpine as build-step
+
+RUN mkdir -p /app
+
+WORKDIR /app
+
+COPY package.json /app
+
+RUN npm install
+
+COPY . /app
+
+RUN npm run build
+
+
+
+FROM nginx:latest as intermediate
+RUN addgroup --system myusergroup && adduser --system --ingroup myusergroup --no-create-home --uid 1001 myuser
+USER myuser
+
+COPY --from=build-step /app/dist/* /usr/share/nginx/html
+
+ 
+
+# Build the final image using the Nginx base image
+FROM nginx:latest
+
+ 
+# Copy files from the intermediate image (including the user) to the final image
+COPY --from=intermediate /usr/share/nginx/html /usr/share/nginx/html
+COPY --from=intermediate --chown=nginx:nginx /var/run/nginx /var/run/nginx
+
+ 
+
+# COPY nginx.conf /etc/nginx/nginx.conf
+
+EXPOSE 8094
+CMD ["nginx", "-g", "daemon off;"]
